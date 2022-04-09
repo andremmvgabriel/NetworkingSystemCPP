@@ -1,0 +1,6 @@
+[submodule "Logger"]
+	path = Logger
+	url = https://github.com/andremmvgabriel/Logger.git
+[submodule "cppzmq"]
+	path = cppzmq
+	url = https://github.com/zeromq/cppzmq.git
