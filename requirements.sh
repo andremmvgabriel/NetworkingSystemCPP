@@ -1,6 +1,8 @@
 #!/bin/bash
 
+# Variables
 CURRENT_DIR=$PWD
+INPUT_ARGS=$@
 
 # Flags
 UPDATE="False"
@@ -66,15 +68,7 @@ clone_and_install_logging () {
 
     # Installation
     cd Logger
-    mkdir -p build
-    cd build
-    cmake ..
-    cmake --build .
-    cd ..
-
-    sudo cp "$PWD/lib/liblogging.a" "/usr/local/lib/liblogging.a"
-    sudo cp "$PWD/include/logging.hpp" "/usr/local/include/logging.hpp"
-
+    ./install.sh $INPUT_ARGS
     cd $CURRENT_DIR
 }
 
@@ -107,20 +101,7 @@ else
     echo "   CPPZMQ successfully installed!"
 fi
 
-
-if [ -f "/usr/local/lib/liblogging.a" ]; then
-    if [ $UPDATE == "True" ]; then
-        echo "> Updating Logging library lib file..."
-        clone_and_install_logging
-        echo "   Update done!"
-    else 
-        echo "> Logging library detected in the libraries folder. Skipping installation..."
-    fi
-else
-    echo "> Logging library was not detected in the libraries folder. Installing..."
-    clone_and_install_logging
-    echo "   Logging library successfully installed!"
-fi
+clone_and_install_logging
 
 # Removes the generated directories and files, if any
 if [ -d "${CURRENT_DIR}/requirements" ]; then
